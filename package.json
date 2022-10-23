@@ -1,5 +1,9 @@
 {
   "name": "Stock_Tracker",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "4.3.1",
+    "jquery": "^3.6.1",
+    "popper.js": "^1.16.1"
+  }
 }
