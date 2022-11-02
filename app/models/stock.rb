@@ -1,10 +1,30 @@
 class Stock < ApplicationRecord
+    has_many :user_stocks
+    has_many :users , through: :user_stocks
 
-    def self.new_lookup(ticker_symbol)
-        client = IEX::Api::Client.new(
-        publishable_token: Rails.application.credentials.iex_client[:sandbox_api_key] ,
-        endpoint: 'https://cloud.iexapis.com/v1' )
+    validates :name , :ticker ,presence: true
+    
+   
+    def self.new_lookup(title)
+   
+            #ده =#{title} اللي بيخليني اقدر اكتب اي تايتل او فاليو و يظهر الريكورد 
+            # الكود ده بيخليني اختار اوبجكت واحد من الاراي اللي عندي 
+        response = Faraday.get("https://dummyjson.com/products/search?q=#{title}" )
+        data = JSON.parse response.body
+        products = data['products']
+        
+        # الاوبجكت اللي انت اختارته بيكون ترتيبه صفر اندكس
+        begin
+            new(ticker: title , name: products[0]['brand'] , last_price: products[0]['price'])
+                rescue => exception
+            return nil
+        end
+   
+    end
 
-        client.price(ticker_symbol)
+    def self.check_db(ticker_symbol)
+        where(ticker: ticker_symbol).first
     end
 end
+
+
