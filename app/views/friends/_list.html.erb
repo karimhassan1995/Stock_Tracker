@@ -1,0 +1,29 @@
+<div class="row">
+<div class="col-5">
+        <table class="table table-bordered table-hover ">
+            <thead>
+                <tr>
+                <<th scope="col">Email</th>
+                <th scope="col">First_Name</th>
+                <th scope="col">Last_Name</th>
+                <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% @tracked_friends.each do |friend| %>
+                <tr>
+                <td><%= friend.email %> </td> 
+                <td><%= friend.first_name %> </td>   
+                 <td><%= friend.last_name %></td>
+                 <td><%= link_to 'view profile' , user_path(friend) ,
+                         class: 'btn btn-sm btn-success mb-2' %>
+                 
+                 <%= link_to 'Remove' , friendship_path(friend) ,method: :delete , data: {confirm: 'Are you sure?'} ,
+                         class: 'btn btn-sm btn-warning' %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
